@@ -16,6 +16,7 @@ Ask the player if they would like to play again.
 */
 
 // Instructions: 
+
 const { Select } = require('enquirer');
 
 console.log(`\nBelow you will find a tic tac toe board. You can choose your move based on the column headers. For example, a move at 1B will be at the center top row. Moves at 1A, 2B, and 3C would give you a diagonal 3 in a row!\n`);
@@ -33,7 +34,7 @@ console.log(ex3); console.log('');
 
 // variables and arrays needed in game. 
 let gameOn; 
-const board = ['1A', '2A', '3A', '1B', '2B', '3B', '1C', '2C', '3C', 'exit']
+const board = ['1A', '2A', '3A', '1B', '2B', '3B', '1C', '2C', '3C', 'I don\'t want to play anymore']
 let play; 
 let gameBoard;
 let player = 'Player X'; 
@@ -49,9 +50,8 @@ const removeString = (array, string) => {
     }
 }
 
-// somehow this function is only passing in the values at each array index and thus changing the paramater names only changes what values were passed in not the actually array location. 
-//we somehow need to change the values in the array location. 
-
+// function that checks a particular victory path. It also informs the computer which position to move to in order to secure a victory or play defense. 
+// the function takes six paramaters representing the 3 array indexes that are a potential 3 in a row and their corresponding string location names. 
 
 const winCondition = (a, b, c, A, B, C) => { 
 
@@ -78,8 +78,6 @@ const row3 = ['', '', ''];
 // Innerloop starts here. The actual game.
 
 while (!gameOn){
-
-
  
     play = new Select({
   name: 'play',
@@ -111,6 +109,18 @@ winCondition(row2[0], row2[1], row2[2], '2A', '2B', '2C');
 winCondition(row3[0], row3[1], row3[2], '3A', '3B', '3C');
 winCondition(row1[0], row2[1], row3[2], '1A', '2B', '3C');
 winCondition(row1[2], row2[1], row3[0], '1C', '2B', '3A');
+
+if (!computerMove) {
+  if (!row2[1]){computerMove = '2B'}
+  else if (!row1[2]) {computerMove = '1C'}
+  else if (!row3[2]) {computerMove = '3C'}
+  else if (!row3[0]) {computerMove = '3A'}
+  else if (!row1[0]) {computerMove = '1A'}
+  else if (!row1[1]) {computerMove = '1B'}
+  else if (!row3[1]) {computerMove = '3B'}
+  else if (!row2[2]) {computerMove = '2C'}
+  else if (!row2[0]) {computerMove = '2A'}
+}
 
 
       if (computerMove === '1A') {row1[0] = 'O'; removeString(gameBoard, '1A');}
