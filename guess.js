@@ -38,7 +38,7 @@ do {
     await again.run()
     .then(answer => {boolean = answer;
     correct = false;
-    if (answer === false){console.log('Thank you for playing. Goodbye!');}
+    if (answer === false){console.log('\nThank you for playing. Goodbye!');}
     })
     .catch(console.error);
 
