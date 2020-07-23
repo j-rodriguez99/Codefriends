@@ -143,6 +143,7 @@ while (!gameOn){
     else if (row2[1] === 'O' && row1[2] === 'X' && row3[0] === 'X' && row1[1] === ' '){computerMove = '1B';}
     else if (row2[1] === 'O' && row2[0] === 'X' && row1[2] === 'X' && row1[1] === ' '){computerMove = '1B';}
     else if (row2[1] === 'O' && row2[0] === 'X' && row3[2] === 'X' && row1[1] === ' '){computerMove = '1B';}
+    else if (row2[1] === 'O' && row2[0] === 'X' && row3[1] === 'X' && row3[0] === ' '){computerMove = '3A';}
     else if (row2[1] === ' '){computerMove = '2B'}
     else if (row1[2] === ' ') {computerMove = '1C'}
     else if (row3[2] === ' ') {computerMove = '3C'}
