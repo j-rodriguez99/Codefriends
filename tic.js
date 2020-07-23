@@ -107,7 +107,6 @@ while (!gameOn){
   choices: gameBoard
   });
 
-
   await play.run()
   .then(answer => {
     if (answer === '1A') {row1[0] = 'X'; removeString(gameBoard, '1A');}
@@ -142,6 +141,8 @@ while (!gameOn){
   if (!computerMove) {
     if (row2[1] === 'O' && row1[0] === 'X' && row3[2] === 'X' && row1[1] === ' '){computerMove = '1B';}
     else if (row2[1] === 'O' && row1[2] === 'X' && row3[0] === 'X' && row1[1] === ' '){computerMove = '1B';}
+    else if (row2[1] === 'O' && row2[0] === 'X' && row1[2] === 'X' && row1[1] === ' '){computerMove = '1B';}
+    else if (row2[1] === 'O' && row2[0] === 'X' && row3[2] === 'X' && row1[1] === ' '){computerMove = '1B';}
     else if (row2[1] === ' '){computerMove = '2B'}
     else if (row1[2] === ' ') {computerMove = '1C'}
     else if (row3[2] === ' ') {computerMove = '3C'}
