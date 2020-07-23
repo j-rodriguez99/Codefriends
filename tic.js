@@ -12,7 +12,7 @@ let computerMove;
 let again;
 let boolean;
 let defense;
-let offense; 
+let offense;
 
 // function to remove a particular string from an array. 
 const removeString = (array, string) => {
@@ -24,51 +24,60 @@ const removeString = (array, string) => {
 }
 
 // function that checks a particular victory path. It also informs the computer which position to move to in order to secure a victory or play defense. 
-// the function takes six paramaters - 3 array indexes that are a possible victory path and their corresponding string names. 
-
-// Is it smart enough to choose victory over defense though? 
+// the function takes six paramaters - 3 array indexes that are a possible victory path and their corresponding string names.
 
 const winCondition = (a, b, c, A, B, C) => { 
 
-  if (a === b && b === c && a){
+  if (a === b && b === c && a !== ' '){
     gameOn = 'we have a winner';
     if (a === 'X'){
       console.log(`Congratulations Player X, you won!`);}
     else {console.log(`Congratulations Player O, you won!`);}
   }
-  else if (a === b && !c && a){
+  else if (a === b && c === ' ' && a !== ' '){
     computerMove = C;
     if (a === 'X'){defense = C}
     else {offense = C}
   }
-  else if (a === c && !b && a){computerMove = B;
+  else if (a === c && b === ' ' && a !== ' '){computerMove = B;
     if (a === 'X'){defense = B}
     else {offense = B}
   }
-  else if (b === c && !a && b){computerMove = A;
+  else if (b === c && a === ' ' && b !== ' '){computerMove = A;
     if (b === 'X'){defense = A}
     else {offense = A}
   }
-}; 
+};
 
+const interface = () => {
+  console.log('    A   B   C ');
+  console.log('  -------------');
+  console.log(`1 | ${row1[0]} | ${row1[1]} | ${row1[2]} |`);
+  console.log('  -------------');
+  console.log(`2 | ${row2[0]} | ${row2[1]} | ${row2[2]} |`);
+  console.log('  -------------');
+  console.log(`3 | ${row3[0]} | ${row3[1]} | ${row3[2]} |`);
+  console.log('  -------------');
+}
 
+let row1 = [' ', ' ', ' ']; 
+let row2 = [' ', ' ', ' ']; 
+let row3 = [' ', ' ', ' ']; 
 // Outer loop starts here. 
 
 do {
+  
+  // resets the arrays that hold the Xs and Os. 
+  row1 = [' ', ' ', ' ']; 
+  row2 = [' ', ' ', ' ']; 
+  row3 = [' ', ' ', ' ']; 
+  
+  
   // game instructions. 
-  console.log(`\nBelow you will find a tic tac toe board. You can choose your move based on the column headers. For example, a move at 1B will be at the center top row. Moves at 1A, 2B, and 3C would give you a diagonal 3 in a row!\n`);
+  console.log(`\nBelow you will find a tic tac toe board. You can choose your move based on the column headers. For example, a move at 1B will be at the center top row. Your opponent will be Zippy, the AI 3-in-row champ.\n`);
 
-  const header = ['A', 'B', 'C',];
-  const ex1 = ['1A', ' ', ' ',]; 
-  const ex2 = [' ', '2B', ' ',];
-  const ex3 = [' ', ' ', '3C',];
+  interface();
   
-  
-  console.log(header); console.log('');
-  console.log(ex1); console.log('');
-  console.log(ex2); console.log('');
-  console.log(ex3); console.log('');
-
   again = new Toggle({
     message: 'Would you like to play again?',
     enabled: 'Yes',
@@ -79,13 +88,6 @@ do {
   gameBoard = [...board]; 
 
   gameOn = '';
-
-  // resets the arrays that hold the Xs and Os. 
-
-  const row1 = ['', '', '']; 
-  const row2 = ['', '', '']; 
-  const row3 = ['', '', '']; 
-
 
 // Innerloop starts here. The actual game.
 
@@ -121,10 +123,8 @@ while (!gameOn){
   })
   .catch(console.error);
 
-  console.log(header); console.log('');
-  console.log(row1); console.log('');
-  console.log(row2); console.log('');
-  console.log(row3); console.log('');
+  console.clear();
+  interface();
 
   if (gameBoard.length === 1){ console.log('\n This game has ended in a stalemate!');
     break; 
@@ -139,20 +139,18 @@ while (!gameOn){
   winCondition(row1[0], row2[1], row3[2], '1A', '2B', '3C');
   winCondition(row1[2], row2[1], row3[0], '1C', '2B', '3A');
 
-  console.log('The computer will now take it\'s turn.');
-
   if (!computerMove) {
-    if (row2[1] === 'O' && row1[0] === 'X' && row3[2] === 'X' && !row1[1]){computerMove = '1B';}
-    else if (row2[1] === 'O' && row1[2] === 'X' && row3[0] === 'X' && !row1[1]){computerMove = '1B';}
-    else if (!row2[1]){computerMove = '2B'}
-    else if (!row1[2]) {computerMove = '1C'}
-    else if (!row3[2]) {computerMove = '3C'}
-    else if (!row3[0]) {computerMove = '3A'}
-    else if (!row1[0]) {computerMove = '1A'}
-    else if (!row1[1]) {computerMove = '1B'}
-    else if (!row3[1]) {computerMove = '3B'}
-    else if (!row2[2]) {computerMove = '2C'}
-    else if (!row2[0]) {computerMove = '2A'}
+    if (row2[1] === 'O' && row1[0] === 'X' && row3[2] === 'X' && row1[1] === ' '){computerMove = '1B';}
+    else if (row2[1] === 'O' && row1[2] === 'X' && row3[0] === 'X' && row1[1] === ' '){computerMove = '1B';}
+    else if (row2[1] === ' '){computerMove = '2B'}
+    else if (row1[2] === ' ') {computerMove = '1C'}
+    else if (row3[2] === ' ') {computerMove = '3C'}
+    else if (row3[0] === ' ') {computerMove = '3A'}
+    else if (row1[0] === ' ') {computerMove = '1A'}
+    else if (row1[1] === ' ') {computerMove = '1B'}
+    else if (row3[1] === ' ') {computerMove = '3B'}
+    else if (row2[2] === ' ') {computerMove = '2C'}
+    else if (row2[0] === ' ') {computerMove = '2A'}
   }
 
   if (offense && defense) {computerMove = offense;}
@@ -167,10 +165,8 @@ while (!gameOn){
   else if (computerMove === '2C') {row2[2] = 'O'; removeString(gameBoard, '2C');}
   else if (computerMove === '3C') {row3[2] = 'O'; removeString(gameBoard, '3C');}
 
-  console.log(header); console.log('');
-  console.log(row1); console.log('');
-  console.log(row2); console.log('');
-  console.log(row3); console.log('');
+  console.clear();
+  interface();
 
 
   winCondition(row1[0], row2[0], row3[0], '1A', '2A', '3A'); 
